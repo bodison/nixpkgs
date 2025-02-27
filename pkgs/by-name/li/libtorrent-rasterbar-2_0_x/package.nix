@@ -6,7 +6,7 @@
   zlib,
   boost,
   openssl,
-  python3,
+  python312,
   ncurses,
   darwin,
 }:
@@ -17,7 +17,7 @@ let
   # Make sure we override python, so the correct version is chosen
   boostPython = boost.override {
     enablePython = true;
-    python = python3;
+    python = python312;
   };
 
 in
@@ -39,7 +39,7 @@ stdenv.mkDerivation {
     boostPython
     openssl
     zlib
-    python3
+    python312
     ncurses
   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.SystemConfiguration ];
 
