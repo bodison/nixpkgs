@@ -6,7 +6,7 @@
   zlib,
   boost,
   openssl,
-  python312,
+  python311,
   ncurses,
   darwin,
 }:
@@ -17,7 +17,7 @@ let
   # Make sure we override python, so the correct version is chosen
   boostPython = boost.override {
     enablePython = true;
-    python = python312;
+    python = python311;
   };
 
 in
@@ -39,14 +39,14 @@ stdenv.mkDerivation {
     boostPython
     openssl
     zlib
-    python312
+    python311
     ncurses
   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.SystemConfiguration ];
 
-  patches = [
-    # provide distutils alternative for python 3.12
-    ./distutils.patch
-  ];
+  # patches = [
+  #   # provide distutils alternative for python 3.12
+  #   ./distutils.patch
+  # ];
 
   # https://github.com/arvidn/libtorrent/issues/6865
   postPatch = ''
@@ -60,7 +60,7 @@ stdenv.mkDerivation {
 
   postInstall = ''
     moveToOutput "include" "$dev"
-    moveToOutput "lib/${python3.libPrefix}" "$python"
+    moveToOutput "lib/${python311.libPrefix}" "$python"
   '';
 
   postFixup = ''
